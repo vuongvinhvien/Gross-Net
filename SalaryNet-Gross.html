@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cà khịa v1.0</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app" class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Cà khịa</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">...zZ"vVv"Zz...<span class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ờ bao mi
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">V3...3Vvvv</a>
+                            <a class="dropdown-item" href="#">V3</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="https://www.facebook.com/vuongvinhvien">vuongvinhvien</a>
+                        </div>
+                    </li>
+
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
+        <hr>
+        <div>
+            <table class="table table-response">
+                <thead>
+                    <td class="col-md-3"></td>
+                    <td class="col-md-3"></td>
+                    <td class="col-md-3"></td>
+                    <td class="col-md-3"></td>
+                </thead>
+                <tbody class="table-response">
+                    <tr class="d-flex">
+                        <td class="">Gross<input v-model="gross" step="10000" class="form-control" type="number"
+                                @change="tinh_Thunhaptruocthue"></td>
+                        <td class="">Net<input v-model="net" class="form-control" type="number" @change="netToGross(net)"></td>
+                        <td class="">tiền 1 người phụ thuộc<input v-model="pricePhuthuoc" class="form-control"
+                                type="text"></td>
+                        <td class="">Số người phụ thuộc<input v-model="countPhuthuoc" class="form-control" type="text"
+                                @change="tinh_giacanhnguoiphuthuoc">
+                        </td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="">Bảo hiểm xã hội 8%</td>
+                        <td>{{bhxh.toLocaleString()}}</td>
+                        <td></td>
+                        <td class=""></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="">Bảo hiểm y tế 1.5%</td>
+                        <td class="">{{bhyt.toLocaleString()}}</td>
+                        <td class=""></td>
+                        <td class=""></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="">Bảo hiểm thất nghiệp 1 %</td>
+                        <td>{{bhtn.toLocaleString()}}</td>
+                        <td class=""></td>
+                        <td class=""></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="">Thu nhập trước thuế</td>
+                        <td>{{thunhaptruocthue.toLocaleString()}}</td>
+                        <td class=""></td>
+                        <td class=""></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="">Giảm trừ gia cảnh người phụ thuộc</td>
+                        <td>{{giamtrugiacanhnguoiphuthuoc.toLocaleString()}}</td>
+                        <td class=""></td>
+                        <td class=""></td>
+
+                    </tr>
+                    <tr class="d-flex">
+                        <td>Giảm trừ gia cảnh bản thân</td>
+                        <td>{{giamtrugiacanhbanthan.toLocaleString()}}</td>
+                        <td class=""></td>
+                        <td class=""></td>
+
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="">thu nhập chịu thuế</td>
+                        <td>{{thunhapchiuthue.toLocaleString()}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <td class="">thuế thu nhập cá nhân</td>
+                        <td>{{thueThunhapcanhan}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <table class="table table-bordered">
+                <thead class="table-header table-active">
+                    <td>Mức chịu thế</td>
+                    <td>thuế suất (%)</td>
+                    <td>Tiền nộp</td>
+                </thead>
+                <tbody>
+                    <tr v-for="item in listMucchiuthue">
+                        <td>{{item.text}}</td>
+                        <td>{{item.tax}}</td>
+                        <td>{{item.val.toLocaleString()}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- development version, includes helpful console warnings -->
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    luongCoBan: 1600000,
+                    luongToiThieuTungvung: [
+                        { val: 4420000, name: 'Vung I' },
+                        { val: 3920000, name: 'Vung II' },
+                        { val: 3430000, name: 'Vung III' },
+                        { val: 3070000, name: 'Vung IV' },
+                    ],
+                    vung: { val: 4420000, name: 'Vung I' },
+                    gross: 13260000,
+                    net: 0,
+                    bhxh: 0, //8%
+                    bhyt: 0, //1.5%
+                    bhtn: 0, //1%
+                    thunhaptruocthue: 0,
+                    giamtrugiacanhbanthan: 11000000,
+                    pricePhuthuoc: 4400000,
+                    countPhuthuoc: 0,
+                    giamtrugiacanhnguoiphuthuoc: 0,
+
+                    thunhapchiuthue: 0,
+
+                    listMucchiuthue: [
+                        { muc: 5000000, tax: 5, val: 0, costBefore: 0, text: 'Đến 5 triệu VNĐ' },
+                        { muc: 10000000, tax: 10, val: 0, costBefore: 0.25, text: 'trên 5 triệu đến 10 tr VNĐ' },
+                        { muc: 18000000, tax: 15, val: 0, costBefore: 0.75, text: 'trên 10 triệu đến 18 tr VNĐ' },
+                        { muc: 32000000, tax: 20, val: 0, costBefore: 1.65, text: 'trên 18 triệu đếm 32 tr VNĐ' },
+                        { muc: 52000000, tax: 25, val: 0, costBefore: 3.25, text: 'trên 32 triệu đến 52 tr VNĐ' },
+                        { muc: 80000000, tax: 30, val: 0, costBefore: 5.85, text: 'trên 52 triệu đến 80 VNĐ' },
+                        { muc: null, tax: 35, val: 0, costBefore: 9.85, text: 'trên 80 triệu VNĐ' },
+                    ],
+                    thueThunhapcanhan: 0,
+                }
+            },
+            computed: {
+
+                maxChiuBHXH_BHYT: function () {
+                    return this.luongCoBan * 20
+                },
+                maxChiuBHTN: function () {
+                    return this.vung.val * 20
+                }
+            },
+            methods: {
+                tinh_Thunhaptruocthue() {
+
+                    if (this.maxChiuBHXH_BHYT < this.gross) {
+                        this.bhxh = this.maxChiuBHXH_BHYT * 0.08;
+                        this.bhyt = this.maxChiuBHXH_BHYT * 0.015;
+                    }
+                    else {
+                        this.bhxh = this.gross * 0.08;
+                        this.bhyt = this.gross * 0.015;
+                    }
+                    if (this.maxChiuBHTN < this.gross) {
+                        this.bhtn = this.maxChiuBHTN * 0.01;
+                    }
+                    else {
+                        this.bhtn = this.gross * 0.01;
+                    }
+
+                    this.thunhaptruocthue = this.gross - (this.bhxh + this.bhyt + this.bhtn);
+                    this.tinh_Thunhapchiuthue();
+                    this.tinh_thuethunhapcanhan();
+                },
+                tinh_giacanhnguoiphuthuoc() {
+                    this.giamtrugiacanhnguoiphuthuoc = this.countPhuthuoc * this.pricePhuthuoc;
+                    // this.tinh_Thunhaptruocthue();
+                },
+                tinh_Thunhapchiuthue() {
+                    this.thunhapchiuthue = this.thunhaptruocthue - (this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan)
+                },
+                tinh_thuethunhapcanhan() {
+                    if (this.thunhapchiuthue > 0) {
+                        let temp = JSON.stringify(this.thunhapchiuthue);
+                        // console.log(temp);
+                        for (let i = 0; i < this.listMucchiuthue.length - 1; i++) {
+
+                            if (temp < this.listMucchiuthue[i].muc) {
+                                if (i == 0) {
+                                    this.listMucchiuthue[i].val = (temp) * this.listMucchiuthue[i].tax / 100;
+                                    break;
+                                }
+                                this.listMucchiuthue[i].val = (temp - this.listMucchiuthue[i - 1].muc) * this.listMucchiuthue[i].tax / 100;
+                                break;
+                            }
+                            else {
+                                if (i !== 0) {
+                                    this.listMucchiuthue[i].val = (this.listMucchiuthue[i].muc - this.listMucchiuthue[i - 1].muc) * this.listMucchiuthue[i].tax / 100;
+                                }
+                                else {
+                                    this.listMucchiuthue[i].val = this.listMucchiuthue[i].muc * this.listMucchiuthue[i].tax / 100;
+                                }
+                            }
+                        }
+                    }
+                },
+                netToGross(net) {
+                    console.log(net);
+                    let TNQD = net-(this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan)
+                    console.log(TNQD);
+                    if (0 < TNQD && TNQD < 4750000) {
+                        this.thunhapchiuthue  = TNQD/0.95;
+                        this.thunhaptruocthue = this.thunhapchiuthue + (this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan);
+                        this.gross = this.thunhaptruocthue/0.895;
+                        // Gross -BH =TN trước thuế = 17 900 000
+                        // Gross*10.5% = BH
+                        // Gross-gros*10.5% = 17 900 000
+                        // Gros (1-10.5%)= 17900000
+                        // Gross =17 900 00/(1-10.5%) = 17900000/0.895
+
+                    }
+                    else if (4750000 < TNQD && TNQD < 9250000) {
+                        this.thunhapchiuthue  = (TNQD-250000)/0.9;
+                        this.thunhaptruocthue = this.thunhapchiuthue + (this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan);
+                        this.gross = this.thunhaptruocthue/0.895;
+                    }
+                    else if (9250000 < TNQD && TNQD < 16050000) {
+                        this.thunhapchiuthue  = (TNQD-750000)/0.85;
+                        this.thunhaptruocthue = this.thunhapchiuthue + (this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan);
+                        this.gross = this.thunhaptruocthue/0.895;
+                    }
+                    else if (16050000 < TNQD && TNQD< 27250000) {
+                        this.thunhapchiuthue  = (TNQD-1650000)/0.8;
+                        this.thunhaptruocthue = this.thunhapchiuthue + (this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan);
+                        this.gross = this.thunhaptruocthue/0.895;
+                    }
+                    else if (27250000 < TNQD && TNQD< 42250000) {
+                        this.thunhapchiuthue  = (TNQD-3250000)/0.75;
+                        this.thunhaptruocthue = this.thunhapchiuthue + (this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan);
+                        this.gross = this.thunhaptruocthue/0.895;
+                    }
+                    else if (42250000 < TNQD && TNQD< 61850000) {
+                        this.thunhapchiuthue  = (TNQD-5850000)/0.7;
+                        this.thunhaptruocthue = this.thunhapchiuthue + (this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan);
+                        this.gross = this.thunhaptruocthue/0.895;
+                    }
+                    else if (61850000 < TNQD) {
+                        this.thunhapchiuthue  = (TNQD-9850000)/0.65;
+                        this.thunhaptruocthue = this.thunhapchiuthue + (this.giamtrugiacanhnguoiphuthuoc + this.giamtrugiacanhbanthan);
+                        this.gross = this.thunhaptruocthue/0.895;
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
